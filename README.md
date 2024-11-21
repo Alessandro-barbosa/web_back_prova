@@ -64,6 +64,7 @@
 ### Deletar um comentário
   Método DELETE
   http://localhost:3000/comment/:id
+  
   A requisição precisa do id do comentário para removê-lo do banco de dados.
 
 ***
