@@ -6,6 +6,7 @@
  Iniciar o projeto com o comando:
  
  npm run dev
+ 
  e após isso o projeto estará rodando na porta 3000, e estará pronto para ouvir qualquer requisição que precisa ser feita.
  
 ## Rotas para lidar com usuários:
