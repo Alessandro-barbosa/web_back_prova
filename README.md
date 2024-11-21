@@ -21,7 +21,7 @@
 ### Atualizar um usuário
   Método PUT
   http://localhost:3000/user/:id
-  É necessário passar o id do usuário na URL e é necessário passar o email, nome, e senha para atulizar um usuário.
+  É necessário passar o id do usuário na URL e é necessário passar o email, nome, e senha no body para atualizar um usuário.
 
 ### Pegar um único usuário
   Método GET
@@ -48,7 +48,7 @@
 ### Atualizar um comentário
   Método PUT
   http://localhost:3000/comment/:id
-  É necessário passar o id do comentário na URL e, no corpo da requisição, No corpo da requisição, é necessário passar os dados do comentário a ser criado, como o title, content, identificar o author com seu id e a qual post pertence 
+  É necessário passar o id do comentário na URL e, no corpo da requisição, No corpo da requisição, é necessário passar os dados do comentário a ser criado, como o title, content, identificar o author com seu id e a qual post pertence. 
 
 ### Deletar um comentário
   Método DELETE
@@ -88,7 +88,7 @@
 ### Criar um novo usuário
   Método POST
   http://localhost:3000/auth/signup
-  Essa rota é usada para registrar um novo usuário no sistema. No corpo da requisição, o usuário envia informações como email, senha, os dados necessários para completar o cadastro. Após a criação do usuário, o sistema pode retorna um usuário criado
+  Essa rota é usada para registrar um novo usuário no sistema. No corpo da requisição, o usuário envia informações como email, senha, os dados necessários para completar o cadastro. Após a criação do usuário, o sistema pode retorna um usuário criado.
 
 ### Sair da aplicação (logout)
   Método POST
