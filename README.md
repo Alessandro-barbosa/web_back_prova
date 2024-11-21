@@ -4,6 +4,7 @@
   Necessário a configuração do .env da api do groq com a variávels GROQ_API_KEY="{$SUACHAVE}"
 ## comandos para rodar projeto:
  Iniciar o projeto com o comando:
+ 
  npm run dev
  e após isso o projeto estará rodando na porta 3000, e estará pronto para ouvir qualquer requisição que precisa ser feita.
  
