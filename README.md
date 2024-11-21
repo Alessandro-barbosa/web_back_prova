@@ -1,98 +1,129 @@
-## Instalação das depedências:
-  npm install
-## Consumo de API para utilizar Inteligência artificial do groq:
-  Necessário a configuração do .env da api do groq com a variávels GROQ_API_KEY="{$SUACHAVE}"
-## comandos para rodar projeto:
- Iniciar o projeto - npm run dev
- e após isso o projeto estará rodando na porta 3000, e estará pronto para ouvir qualquer requisição que precisa ser feita.
- 
-## Rotas para lidar com usuários:
-### Listar todos os usuários
-  Método GET
-  http://localhost:3000/users
-  Com retorno de um JSON de todos os usuários cadastrados no banco de dados.
+## Lista de comandos usados no projeto
 
-### Criar um novo usuário
-  Método POST
-  http://localhost:3000/user
-  No corpo da requisição, é necessário passar o email, nome, e senha para cadastrar um novo usuário, o sistema salvará
-  o hash da senha no backend
+- npm init -y: Cria um arquivo package.json com as configurações padrão.
+- npm i typescript: Instala o TypeScript como dependência do projeto.
+- npx tsc --init: Gera um arquivo tsconfig.json com a configuração do TypeScript.
+- npm i ts-node: Instala o ts-node para rodar arquivos TypeScript diretamente.
+- npx tsc: Compila os arquivos TypeScript para JavaScript usando o tsconfig.json.
 
-### Atualizar um usuário
-  Método PUT
-  http://localhost:3000/user/:id
-  É necessário passar o id do usuário na URL e é necessário passar o email, nome, e senha para atulizar um usuário.
+# Código do tsconfig.json
 
-### Pegar um único usuário
-  Método GET
-  http://localhost:3000/user/:id
-  Com o id do usuário na URL, essa rota retorna os dados desse usuário específico.
+```
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  }
+}
+```
 
-### Deletar um usuário
-  Método DELETE
-  http://localhost:3000/user/:id
-  A requisição necessita do id do usuário para removê-lo do banco de dados.
-  
-***
-## Rotas para lidar com comentários
-### Listar todos os comentários
-  Método GET
-  http://localhost:3000/comments
-  Com retorno de um JSON de todos os comentários cadastrados no banco de dados.
+## Scripts que estão sendo utilizados no package.json
 
-### Inserir um novo comentário
-  Método POST
-  http://localhost:3000/comment
-  No corpo da requisição, é necessário passar os dados do comentário a ser criado, como o title, content, identificar o author com seu id e a qual post pertence, o comentário passará por uma analise de IA consumindo a API do groq.
+- "build": "npx tsc"
+- "dev": "npx ts-node ./src/server.ts"
 
-### Atualizar um comentário
-  Método PUT
-  http://localhost:3000/comment/:id
-  É necessário passar o id do comentário na URL e, no corpo da requisição, No corpo da requisição, é necessário passar os dados do comentário a ser criado, como o title, content, identificar o author com seu id e a qual post pertence 
+## Configurando um servidor web
 
-### Deletar um comentário
-  Método DELETE
-  http://localhost:3000/comment/:id
-  A requisição precisa do id do comentário para removê-lo do banco de dados.
+- npm install express
+- npm i --save-dev @types/express
 
-***
-## Rotas para lidar com posts
+## Projeto para usar múltiplas versões do NodeJS na mesma máquina
 
-### Listar todos os posts
-  Método GET
-  http://localhost:3000/posts
-  Com retorno de um JSON contendo todos os posts cadastrados no banco de dados.
+- https://github.com/nvm-sh/nvm?tab=readme-ov-file#install--update-script
 
-### Inserir um novo post
-  Método POST
-  http://localhost:3000/post
-  No corpo da requisição, é necessário passar os dados do post, como o título, conteúdo e o ID do usuário que criou o post.
+## Algumas extensões do VSCode recomendadas
 
-### Atualizar um post
-  Método PUT
-  http://localhost:3000/post/:id
-  É necessário passar o id do post na URL e, no corpo da requisição, os dados a serem atualizados, como o título ou o conteúdo do post.
+```
+{
+    "recommendations": [
+        "vscode-icons-team.vscode-icons",
+        "esbenp.prettier-vscode",
+        "prisma.prisma",
+        "Prisma.prisma-insider"
+    ]
+}
+```
 
-### Deletar um post
-  Método DELETE
-  http://localhost:3000/post/:id
-  A requisição necessita do id do post para removê-lo do banco de dados.
+## Instalando o ts-node-dev
 
-***
+O ts-node-dev nos ajuda a ter mais produtividade uma vez que ele reinicializar o servidor automaticamente a medida que salvamos o projeto.
 
-### Autenticar um usuário e gerar seu token
-  Método POST
-  http://localhost:3000/auth/signin
-  O usuário envia suas credenciais como o email e a senha no corpo da requisição. Se as credenciais forem válidas, o servidor gera e retorna um token de autenticação. Esse token será usado para acessar rotas protegidas.
+- npm i ts-node-dev --save-dev
 
-### Criar um novo usuário
-  Método POST
-  http://localhost:3000/auth/signup
-  Essa rota é usada para registrar um novo usuário no sistema. No corpo da requisição, o usuário envia informações como email, senha, os dados necessários para completar o cadastro. Após a criação do usuário, o sistema pode retorna um usuário criado
+Depois de instalado, basta atualizar o script (dentro de package.json) de execução do projeto para:
 
-### Sair da aplicação (logout)
-  Método POST
-  http://localhost:3000/auth/signout
-  Essa rota é responsável por fazer o logout do usuário.
+```
+  "dev": "npx ts-node-dev ./src/server.ts"
+```
 
+## Configurando o Prisma ORM
 
+- https://www.prisma.io/docs/getting-started/quickstart
+
+Vamos configurar o Prisma ORM com o seguinte schema de dados
+
+```
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  name     String?
+  posts    Post[]
+  comments Comment[]
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean   @default(false)
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int
+  comments  Comment[]
+}
+
+model Comment {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String
+  published Boolean @default(false)
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+  post      Post    @relation(fields: [postId], references: [id])
+  postId    Int
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+```
+
+## Instalação da extensão do ThunderClient
+
+- Extension ID = rangav.vscode-thunder-client
+
+## Métodos do HTTP
+
+- https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods
+
+## Status Codes do HTTP
+
+- https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status#respostas_de_erro_do_servidor
+
+##
+-JWT para criar os tokens
+
+-Avançar no projeto usando middleware
+##
+Fazer uma aplicação com react native para consumir a api anterior feita, telas de login, middleware de autenticação, tokkens para continuidade de sessão.
